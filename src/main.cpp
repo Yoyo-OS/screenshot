@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 CutefishOS Team.
+ * Copyright (C) 2021 YoyoOS Team.
  *
  * Author:     Reion Wong <reionwong@gmail.com>
  *
@@ -32,17 +32,17 @@ int main(int argc, char *argv[])
 
     QCommandLineOption delayOption(QStringList() << "d" << "delay", "Delay Screenshot", "NUM");
     QCommandLineParser parser;
-    parser.setApplicationDescription("Cutefish Screenshot");
+    parser.setApplicationDescription("Yoyo Screenshot");
     parser.addHelpOption();
     parser.addOption(delayOption);
     parser.process(app);
 
-    if (!QDBusConnection::sessionBus().registerService("com.cutefish.Screenshot")) {
+    if (!QDBusConnection::sessionBus().registerService("com.yoyo.Screenshot")) {
         app.exit();
         return 0;
     }
 
-    QString qmFilePath = QString("%1/%2.qm").arg("/usr/share/cutefish-screenshot/translations/").arg(QLocale::system().name());
+    QString qmFilePath = QString("%1/%2.qm").arg("/usr/share/yoyo-screenshot/translations/").arg(QLocale::system().name());
     if (QFile::exists(qmFilePath)) {
         QTranslator *translator = new QTranslator(QApplication::instance());
         if (translator->load(qmFilePath)) {
