@@ -5,5 +5,8 @@
         <file>qml/ImageButton.qml</file>
         <file>images/ok.svg</file>
         <file>images/save.svg</file>
+        <file>qml/DragRect.qml</file>
+        <file>qml/ResizeBorder.qml</file>
+        <file>qml/MoveArea.qml</file>
     </qresource>
 </RCC>
