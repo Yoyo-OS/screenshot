@@ -25,21 +25,27 @@
 class ScreenshotView : public QQuickView
 {
     Q_OBJECT
+    Q_PROPERTY(bool ocrEnabled READ ocrEnabled NOTIFY ocrEnabledChanged)
 
 public:
     explicit ScreenshotView(QQuickView *parent = nullptr);
-
+    bool ocrEnabled() const;
     void start();
     void delay(int value);
 
     Q_INVOKABLE void quit();
     Q_INVOKABLE void saveFile(QRect rect);
     Q_INVOKABLE void copyToClipboard(QRect rect);
+    Q_INVOKABLE void ocr(QRect rect);
 
     void removeTmpFile();
 
+private:
+    bool m_ocrEnabled;
+
 signals:
     void refresh();
+    void ocrEnabledChanged();
 };
 
 #endif // SCREENSHOTVIEW_H

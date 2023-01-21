@@ -29,20 +29,36 @@
 #include <QPixmap>
 #include <QStandardPaths>
 #include <QDateTime>
-
+#include <QProcess>
 #include <QDBusInterface>
 #include <QDBusPendingCall>
+#include <QDir>
 
 ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
 {
     rootContext()->setContextProperty("view", this);
-
+    QString filePath = "/usr/bin/durian-ocr";
+    QFile file(filePath);
+    if(file.exists())
+    {
+        m_ocrEnabled=true;
+    }
+    else
+    {
+        m_ocrEnabled=false;
+    }
+    emit ocrEnabledChanged();
     setFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
     setScreen(qGuiApp->primaryScreen());
     setResizeMode(QQuickView::SizeRootObjectToView);
     setSource(QUrl("qrc:/qml/main.qml"));
     setGeometry(screen()->geometry());
+}
+
+bool ScreenshotView::ocrEnabled() const
+{
+    return m_ocrEnabled;
 }
 
 void ScreenshotView::start()
@@ -69,6 +85,28 @@ void ScreenshotView::delay(int value)
 void ScreenshotView::quit()
 {
     qGuiApp->quit();
+}
+
+void ScreenshotView::ocr(QRect rect)
+{
+    setVisible(false);
+    QDir dir;
+    dir.mkpath("/tmp/yoyo-screenshot/");
+    QString fileName = QString("%1/Screenshot_%2.png")
+                              .arg("/tmp/yoyo-screenshot")
+                              .arg(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss"));
+
+    QImage image("/tmp/yoyo-screenshot.png");
+    QImage cropped = image.copy(rect);
+    bool saved = cropped.save(fileName);
+
+    if (saved) {
+        QProcess process(this);
+        process.startDetached("durian-ocr "+fileName);
+    }
+
+    removeTmpFile();
+    this->quit();
 }
 
 void ScreenshotView::saveFile(QRect rect)

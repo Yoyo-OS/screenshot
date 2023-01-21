@@ -8,5 +8,6 @@
         <file>qml/DragRect.qml</file>
         <file>qml/ResizeBorder.qml</file>
         <file>qml/MoveArea.qml</file>
+        <file>images/ocr.svg</file>
     </qresource>
 </RCC>

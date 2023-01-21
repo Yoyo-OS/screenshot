@@ -90,6 +90,13 @@ Item {
                               selectLayer.height * Screen.devicePixelRatio))
     }
 
+    function ocr() {
+        view.ocr(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
+                              selectLayer.y * Screen.devicePixelRatio,
+                              selectLayer.width * Screen.devicePixelRatio,
+                              selectLayer.height * Screen.devicePixelRatio))
+    }
+
     function copyToClipboard() {
         view.copyToClipboard(Qt.rect(selectLayer.x * Screen.devicePixelRatio,
                                      selectLayer.y * Screen.devicePixelRatio,
@@ -200,7 +207,7 @@ Item {
         id: tools
 
         width: toolsLayout.implicitWidth + FishUI.Units.largeSpacing
-        height: 36 + FishUI.Units.smallSpacing
+        height: 40 + FishUI.Units.smallSpacing
 
         visible: selectLayer.visible && selectLayer.width > 1 && selectLayer.height > 1
         z: 999
@@ -254,21 +261,29 @@ Item {
 
             ImageButton {
                 iconMargins: FishUI.Units.largeSpacing
-                size: 36
+                size: 40
+                source: "qrc:/images/ocr.svg"
+                visible: control.ocrEnabled
+                onClicked: control.ocr()
+            }
+
+            ImageButton {
+                iconMargins: FishUI.Units.largeSpacing
+                size: 40
                 source: "qrc:/images/save.svg"
                 onClicked: control.save()
             }
 
             ImageButton {
                 iconMargins: FishUI.Units.largeSpacing
-                size: 36
+                size: 40
                 source: "qrc:/images/cancel.svg"
                 onClicked: view.quit()
             }
 
             ImageButton {
                 iconMargins: FishUI.Units.largeSpacing
-                size: 36
+                size: 40
                 source: "qrc:/images/ok.svg"
                 onClicked: control.copyToClipboard()
             }
