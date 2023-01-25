@@ -38,7 +38,6 @@ ScreenshotView::ScreenshotView(QQuickView *parent)
     : QQuickView(parent)
 {
     rootContext()->setContextProperty("view", this);
-    QString filePath = "/usr/bin/durian-ocr";
     QString filePath = "/usr/bin/yoyo-ocr";
     QFile file(filePath);
     if(file.exists())
