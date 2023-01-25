@@ -102,7 +102,7 @@ void ScreenshotView::ocr(QRect rect)
 
     if (saved) {
         QProcess process(this);
-        process.startDetached("durian-ocr "+fileName);
+        process.startDetached("yoyo-ocr "+fileName);
     }
 
     removeTmpFile();
